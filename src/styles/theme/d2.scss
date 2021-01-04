@@ -1,0 +1,68 @@
+.theme-d2 {
+  .avue-logo{
+    color: #409EFF;
+    background-color: #407BFE;
+    box-shadow: 0px 2px 7px 0px rgba(6, 21, 50, 0.2);
+    .avue-logo_title{
+      font-size: 20px;
+      font-weight: 400;
+    }
+  }
+  .el-menu-item.is-active:before{
+    background: #407BFE;
+  }
+  .avue-top{
+    background-color: #407BFE;
+    box-shadow: none;
+    color: #FFFFFF;
+    span{
+      color: #FFFFFF;
+    }
+  }
+  .avue-main{
+    padding: 0 5px 0 0px;
+  }
+  .avue-tags{
+    margin-left: 0px;
+    padding: 0;
+    border: 1px solid #e4e7ed;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    box-shadow: none;
+    .el-tabs__item{
+      border-left: 1px solid #cfd7e5 !important;
+      margin: 0 !important;
+      background-color:  #FFFFFF !important;
+      color: #606266 !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      &:first-child{
+        border-left: none !important;
+      }
+    }
+    .is-active{
+      border-bottom:1px solid #fff !important;
+      background-color: #FFFFFF !important;
+      color: #409EFF !important;
+    }
+  }
+  .avue-sidebar{
+    background-color: #FFFFFF;
+    box-shadow: none;
+    .el-menu-item,.el-submenu__title{
+      i,span{
+        color:#606266
+      }
+      &:hover,&.is-active{
+        background-color: #F1F5FF !important;
+        background: hsla(0,0%,100%,.5);
+        i,span{
+          color: #409EFF;
+        }
+      }
+    }
+  }
+}
+.avue-tags .el-tabs--card > .el-tabs__header .el-tabs__item.is-active{
+  border-top: 2px solid #407BFE !important;
+}

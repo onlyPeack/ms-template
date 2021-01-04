@@ -1,0 +1,67 @@
+.contractPrintContainer {
+  position: relative;
+  color: #000003;
+  font-size: 12px;
+  font-family: '宋体';
+  padding: 20px;
+  margin: auto;
+  .footer-container {
+    margin-top: 15px;
+    text-align: right;
+  }
+}
+
+.page-break {
+  position: relative;
+  break-after: page;
+  page-break-after: always;
+}
+
+.print-container {
+  color: #000003;
+  font-family: '宋体';
+  padding-top: 10px;
+  .company-name {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  .print-title {
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .print-hr {
+    border-top: 1px dashed black;
+    height: 15px;
+  }
+  .formTable {
+    width: 100%;
+    margin-bottom: -1px;
+    border: none;
+    border-spacing: 0;
+    border-collapse: collapse;
+    color: #000003;
+    font-size: 12px;
+    font-family: '宋体';
+    th, td {
+      border: 1px solid black !important;
+      padding: 5px;
+      margin: 0px;
+      padding-left: 10px;
+      .label {
+        padding-right: 10px;
+      }
+    }
+  }
+  .itemsTable {
+    .table-head {
+      text-align: center;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+
