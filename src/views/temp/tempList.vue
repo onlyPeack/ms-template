@@ -40,7 +40,7 @@
                             <span>{{tempArea[row.area]}}</span>
                         </el-table-column>
                         <el-table-column label="模板图片" width="400" align="center" prop="pic" v-slot="{row}">
-                            <el-image :src="row.pic" style="height: 100px"></el-image>
+                            <el-image :src="row.pic" style="height: 100px" @click="doShowImageViewer(row.pic)"></el-image>
                         </el-table-column>
                         <el-table-column label="备注" align="center" prop="note">
                         </el-table-column>
@@ -80,7 +80,7 @@
                 <el-button type="primary" @click="createData" :loading="isLoading">确定</el-button>
             </div>
         </el-dialog>
-
+        <el-image-viewer :url-list="srcList" v-if="showImageViewer" :on-close="closeImageViewer"/>
     </div>
 </template>
 
@@ -128,7 +128,7 @@
 <script>
     import {tempType,tempArea} from "./common/dic";
     import {page,delObj} from '@/api/temp/tempControl'
-
+    import imgViewMixin from "../erp/saas/common/imgViewMixin";
     export default {
         name: 'goodsTag',
         data() {
@@ -187,6 +187,7 @@
 
             }
         },
+        mixins:[imgViewMixin],
         created() {
             this.init();
             //this.getList();

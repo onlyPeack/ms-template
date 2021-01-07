@@ -29,7 +29,7 @@
     "less": "^3.12.2",
     "less-loader": "^7.0.1",
     "mockjs": "^1.0.1-beta3",
-    "ms-template-manage": "^0.2.7",
+    "ms-template-manage": "^0.2.12",
     "nprogress": "^0.2.0",
     "portfinder": "^1.0.23",
     "qrcodejs2": "0.0.2",

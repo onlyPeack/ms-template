@@ -54,16 +54,16 @@
                             <div v-for="child in moduleStyle.text" class="temp-preview-aside-text-setting" v-bind:key="child.label">
                                 <h3 style="text-align: left">{{child.label}}</h3>
                                 <el-collapse accordion>
-                                    <el-collapse-item v-for="(item,index) in child.children">
+                                    <el-collapse-item v-for="(item,index) in child.children" v-bind:key="`pre-text${index}`">
                                         <template slot="title" slot-scope="scope">
                                             <el-form-item :label="`预设文字组合${index+1}：`">
                                                 <div @click.stop>
-                                                    <el-input v-model="item.label"></el-input>
+                                                    <el-input v-model="item.label" style="width: 300px"></el-input>
                                                 </div>
                                             </el-form-item>
                                         </template>
                                         <div v-if="item.children" v-for="(textItem,textIndex) in item.children"
-                                             style="margin-bottom: 10px;">
+                                             style="margin-bottom: 10px;" v-bind:key="`pre-textItem${textIndex}`">
                                             <el-form-item :label="`预设${textIndex+1}：`">
                                                 <el-input v-model="textItem.label"></el-input>
                                             </el-form-item>
@@ -72,19 +72,19 @@
                                             </el-form-item>
                                             <el-form-item label="内部网页：">
                                                 <el-select v-model="textItem.link" style="width:100%">
-                                                    <el-option :label="webPage.name" v-for="webPage in webPageList"
+                                                    <el-option :label="webPage.name" v-for="webPage in webPageList" v-bind:key="webPage.id"
                                                                :value="`/#/bigPreview?id=${webPage.id}`"></el-option>
                                                 </el-select>
                                             </el-form-item>
                                         </div>
-                                        <div>
-                                            <el-button type="primary" circle icon="el-icon-plus"></el-button>
-                                        </div>
+<!--                                        <div>-->
+<!--                                            <el-button type="primary" circle icon="el-icon-plus"></el-button>-->
+<!--                                        </div>-->
                                     </el-collapse-item>
                                 </el-collapse>
-                                <div style="text-align: center;margin-top: 5px;">
-                                    <el-button type="primary" circle icon="el-icon-plus"></el-button>
-                                </div>
+<!--                                <div style="text-align: center;margin-top: 5px;">-->
+<!--                                    <el-button type="primary" circle icon="el-icon-plus"></el-button>-->
+<!--                                </div>-->
                                 <!--                        <el-form label-width="120px">-->
                                 <!--                            <el-form-item v-for="item in child.children" :label="`${item.label}：`">-->
                                 <!--                                <el-input v-model="item.value"></el-input>-->
@@ -92,6 +92,12 @@
                                 <!--                        </el-form>-->
                             </div>
                         </el-form>
+                        <div style="text-align: center;margin-top: 15px;">
+                            <el-button @click="doSave" type="primary"
+                                       v-if="moduleStyle.text&&moduleStyle.text.length>0">
+                                保存
+                            </el-button>
+                        </div>
                     </el-tab-pane>
                     <el-tab-pane label="手机样式">
 
@@ -123,7 +129,7 @@
 
                     </el-tab-pane>
                     <el-tab-pane label="模板信息">
-                        <div v-if="moduleStyle.info">
+                        <div v-if="moduleStyle.info" style="text-align: center;">
                             <h4 v-for="item in moduleStyle.info" v-bind:key="item">{{item}}</h4>
                         </div>
                     </el-tab-pane>
@@ -137,15 +143,17 @@
                                      style="text-align: left;margin-bottom: 10px;font-size: 16px"
                                      v-bind:key="item.title">
                                     <span>{{item.title}}</span>
+                                    <i class="el-icon-rank"
+                                       style="float:right;cursor: pointer;margin-right: 20px;color: #409EFF"></i>
                                     <i class="el-icon-minus"
                                        style="float:right;cursor: pointer;margin-right: 20px;color: #409EFF"
                                        @click="removeTemp(item)"></i>
-                                    <i class="el-icon-bottom"
-                                       style="float:right;cursor: pointer;margin-right: 20px;color: #409EFF"
-                                       @click="insertTemp(item,index,'after')"></i>
-                                    <i class="el-icon-top"
-                                       style="float:right;cursor: pointer;margin-right: 20px;color: #409EFF"
-                                       @click="insertTemp(item,index,'before')"></i>
+<!--                                    <i class="el-icon-bottom"-->
+<!--                                       style="float:right;cursor: pointer;margin-right: 20px;color: #409EFF"-->
+<!--                                       @click="insertTemp(item,index,'after')"></i>-->
+<!--                                    <i class="el-icon-top"-->
+<!--                                       style="float:right;cursor: pointer;margin-right: 20px;color: #409EFF"-->
+<!--                                       @click="insertTemp(item,index,'before')"></i>-->
                                 </div>
                                 <!--                            <transiton>-->
                                 <!--                               预留过渡动画 -->
@@ -196,9 +204,9 @@
                           :isSingle="true"
                           @handleClose="handleClosePublic" @handleSubmit="articleSubmit"></article-selector>
 
-        <!--        关联文章弹窗-->
+        <!--        关联详情页弹窗-->
         <page-selector v-if="isShowPageSelector" :dialogVisible="isShowPageSelector"
-                       :isSingle="true"
+                       :isSingle="true" :id="$route.query.id"
                        @handleClose="handleClosePublic" @handleSubmit="pageSubmit"></page-selector>
     </div>
 </template>
@@ -233,7 +241,9 @@
                 isShowTempSelector: false,//是否展示模板选择弹窗
                 isShowPageSelector: false,//是否展示网页选择弹窗
                 chooseTemp: [],//已关联的模板
-                moduleStyle: {},//当前模板样式&文案
+                moduleStyle: {
+                    name:'MS'
+                },//当前模板样式&文案
                 webPageList: [],//当前所有网页
                 chooseArticle: {},//当前选择的文章集合
                 chooseDetailPage: {},//当前文章关联的详情页
@@ -286,8 +296,6 @@
                 updStyle(params).then(res => {
                     this.getDetail()
                 }, error => this.$message.error('保存样式失败!' + error))
-                //this.$refs.msHead[0].setModule(this.moduleStyle)
-                // console.log(this.$refs.msHead[0].getModule())
             },
 
             creatQrCode() {
@@ -370,9 +378,13 @@
                     this.chooseTempIndex++
                     this.nowIndex++
                 }
+                //设置样式
                 this.moduleStyle = this.$refs.msHead[this.chooseTempIndex].getModule()
+                //显示关联文章
+                this.chooseArticle = this.chooseTemp[this.chooseTempIndex].articleList&&this.chooseTemp[this.chooseTempIndex].articleList.length>0?this.chooseTemp[this.chooseTempIndex].articleList[0]:{}
+                //显示关联详情页
                 if (this.columnType[this.chooseTemp[this.chooseTempIndex].type] === '列表') {
-                    this.chooseDetailPage = this.chooseTemp[this.chooseTempIndex].detail
+                    this.chooseDetailPage = this.chooseTemp[this.chooseTempIndex].detail||{}
                 }
             },
 
@@ -519,7 +531,7 @@
                 if (this.$refs.msHead && this.$refs.msHead.length > 0) {
                     for (let i = 0; i < this.$refs.msHead.length; i++) {
                         let style = {}
-                        let module = this.$refs.msHead[i].getModule()
+
                         if (this.chooseTemp[i].style && this.chooseTemp[i].style.length > 0) {
                             style = JSON.parse(this.chooseTemp[i].style)
                         }
@@ -530,12 +542,15 @@
                             }
                             this.chooseArticle = this.chooseTemp[i].articleList[0]||{}
                         }
+
+                        let module = this.$refs.msHead[i].getModule()
                         if (Object.prototype.toString.call(module.text) === '[object Array]') {
                             for (let j = 0; j < module.text.length; j++) {
 
                                 if (module.text[j].type && module.text[j].type === 'nav') {
                                     module.text[j].children = this.webPageList
-                                    //console.log(this.webPageList,'check !!!')
+                                }else{
+                                    module.text[j].children = style.text[j].children
                                 }
                             }
                             style.text = module.text
@@ -550,7 +565,7 @@
                         console.log(style, 'submitList', this.webPageList, this.$refs.msHead[i].getModule().text)
 
                     }
-                    if (!this.moduleStyle.name) {
+                    if (this.moduleStyle.name!=='MS') {
                         //onsole.log('没name')
                         this.moduleStyle = this.$refs.msHead[0].getModule()
                     }
@@ -637,6 +652,9 @@
 
     #app {
         overflow: unset;
+    }
+    .temp-preview-aside-text-setting .el-form-item--mini.el-form-item, .el-form-item--small.el-form-item{
+        margin-bottom: 0;
     }
 </style>
 

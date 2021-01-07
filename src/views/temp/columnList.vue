@@ -129,7 +129,7 @@
                 },
                 columnType,
                 isLoading: false,
-                list: undefined,
+                list: [],
                 total: undefined,
                 listLoading: true,
                 listQuery: {
@@ -193,13 +193,7 @@
             }
         },
         methods: {
-            deletePreview(val){
-                if(val == 1){
-                    this.dataForm.iconUrl = ''
-                }else{
-                    this.dataForm.picUrl = ''
-                }
-            },
+
             handleCategoryChange(value) {
                 this.dataForm.pid = value[value.length - 1]
             },

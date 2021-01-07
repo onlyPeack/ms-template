@@ -1,7 +1,7 @@
 <template>
     <el-dialog :visible.sync="dialogVisible" width="70%" @close="handleClose" :modal-append-to-body="false"
                :nowRow="nowRow"
-               :before-close="handleClose" title="选择模板" append-to-body class="public-dialog" custom-class="temp-dialog">
+               :before-close="handleClose" title="选择文章栏目" append-to-body class="public-dialog" custom-class="temp-dialog">
 
         <avue-crud ref="crud"
                    v-if="isShow"
@@ -156,9 +156,8 @@
                     //     align: 'center',
                     // },
                     {
-                        label: '是否关联',
-                        prop: 'isBind',
-                        slot: true,
+                        label: '关联栏目',
+                        prop: 'columnName',
                         align: 'center'
                     },
                     {

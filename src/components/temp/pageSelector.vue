@@ -32,7 +32,7 @@
 </template>
 
 <script>
-    import {page as selectPage} from '@/api/temp/columnControl';
+    import {getObj} from '@/api/temp/columnControl';
     import {columnType} from "../../views/temp/common/dic";
 
     export default {
@@ -65,7 +65,8 @@
                     pageSize: 20 // 每页显示多少条
                 },
                 listQuery: {
-                    type:2
+                    type:2,
+                    id:this.id,
                 },
                 permission: {//顶部按钮显示隐藏
                     addBtn: false,
@@ -166,6 +167,7 @@
             };
             this.tableOption.column = this.billColumn;
             this.getList(this.page);
+
             // console.log(this.$store.getters.userInfo.no,'no')
         },
         updated() {
@@ -183,13 +185,10 @@
                 }
             },
             //获取数据
-            getList(page, params = {}) {
+            getList() {
                 this.loading = true;
-                let queryObj = Object.assign(params, this.listQuery, {page: page.currentPage, limit: page.pageSize});
-                queryObj = JSON.parse(JSON.stringify(queryObj));
-                let select = selectPage;
-                select(queryObj).then(res => {
-                    const data = res.data;
+                getObj(this.id).then(res => {
+                    const data = res.data.data.children;
                     this.page.total = data.length;
                     let arr=[]
                     for (let i = 0; i <data.length ; i++) {

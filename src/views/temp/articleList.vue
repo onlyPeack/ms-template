@@ -136,7 +136,7 @@
 </style>
 
 <script>
-    import {page, delObj, putObj, addObj, list} from '@/api/temp/articleControl'
+    import {page, delObj, putObj, addObj} from '@/api/temp/articleControl'
     import imgViewMixin from "../erp/saas/common/imgViewMixin";
     export default {
         name: 'articleList',
@@ -361,6 +361,7 @@
                     if (valid) {
                         let method = this.dialogStatus === 'create' ? addObj : putObj
                         let message = this.dialogStatus === 'create' ? "栏目新增" : "栏目编辑"
+                        this.addList.pid=0
                         method(this.addList).then(response => {
                             this.isLoading = false;
                             if (Number(response.data.code) === 2000) {

@@ -19,7 +19,7 @@
                            @row-click="handleRowClick"
                            :cell-style="handleCellStyle">
                     <template slot-scope="scope" slot="pic">
-                        <el-image :src="scope.row.pic" style="height: 100px"></el-image>
+                        <el-image :src="scope.row.pic" style="height: 100px" @click="doShowImageViewer(scope.row.pic)"></el-image>
                     </template>
                     <template slot="type" slot-scope="scope">
                         <span>{{tempType[scope.row.type]}}</span>
@@ -37,20 +37,21 @@
             <el-button @click="handleClose">取 消</el-button>
             <el-button type="primary" @click="handleSubmit">确 定</el-button>
         </div>
+        <el-image-viewer :url-list="srcList" v-if="showImageViewer" :on-close="closeImageViewer"/>
     </el-dialog>
 </template>
 
 <script>
     import {page as selectPage} from '@/api/temp/tempControl';
     import {tempArea,tempType} from "../../views/temp/common/dic";
-
+    import imgViewMixin from "../../views/erp/saas/common/imgViewMixin";
     export default {
         props: ['timeStamp','dialogVisible', 'isSingle', 'title','option','typeName','code','typeOption','id','itemVisible','selectType','operationType','craftId','config','discountLevel','nowRow','afterChoose'],
         name: "memberSelector",
         components: {
             'button-bar': () => import('@/components/setting/button_bar'),
-
         },
+        mixins:[imgViewMixin],
         data() {
             return {
                 textMap: {//新增&编辑对话框顶部标题字典

@@ -10,6 +10,7 @@ export const tempArea={
     1:'头部',
     2:'尾部',
     3:'侧边',
+    4:'网页'
 }
 /*板块类型*/
 export const columnType={
